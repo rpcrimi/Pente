@@ -33,8 +33,74 @@ class Board(object):
 		self.moves.append([y,x])
 		return y,x
 
+	def checkForNeighbor(self, x, y, playerNum, direction):
+		# left
+		if x > 0 and (direction == "left" or direction == None):
+			if self.board[y][x-1] == playerNum:
+				print "found left"
+				return "left"
+		# right
+		if x < self.boardSize - 1 and (direction == "right" or direction == None):
+			if self.board[y][x+1] == playerNum:
+				print "found right"
+				return "right"
+		# up
+		if y > 0 and (direction == "up" or direction == None):
+			if self.board[y-1][x] == playerNum:
+				print "found up"
+				return "up"
+		# down
+		if y < self.boardSize - 1 and (direction == "down" or direction == None):
+			if self.board[y+1][x] == playerNum:
+				print "found down"
+				return "down"
+		return "nothing"
+
 	def checkFor5(self):
-		return
+		# go through each point, if we find a number, look for neighbor with the same number
+		# checkforneighbor returns
+		# true if there is a neighbor, false if there is not, increment a count
+		# checkForNeighbors has an optional direction it is looking for
+		for x in range(boardSize):
+			for y in range(boardSize):
+				numInRow = 0
+				# check for number
+				if self.board[y][x] > 0:
+					playerNum = self.board[y][x]
+					currentX = x
+					currentY = y
+					while checkForNeighbor(x, y) != "nothing":
+						currentDirection = checkForNeighbor(currentX, currentY)
+						count = 0
+						if currentDirection == "left":
+							currentX = currentX - 1
+							while checkForNeighbor(currentX, currentY, playerNum, "left") != "nothing":
+								count += 1
+								currentX = currentX - 1
+								if count == 5:
+									return True
+						if currentDirection == "right":
+							currentX = currentX + 1
+							while checkForNeighbor(currentX, currentY, playerNum, "left") != "nothing":
+								count += 1
+								currentX = currentX + 1
+								if count == 5:
+									return True
+						if currentDirection == "up":
+							currentY = currentY - 1
+							while checkForNeighbor(currentX, currentY, playerNum, "left") != "nothing":
+								count += 1
+								currentY = currentY - 1
+								if count == 5:
+									return True
+						if currentDirection == "down":
+							currentY = currentY + 1
+							while checkForNeighbor(currentX, currentY, playerNum, "left") != "nothing":
+								count += 1
+								currentY = currentY + 1
+								if count == 5:
+									return True
+		return False
 
 	def checkForCapture(self, player, waitingPlayer):
 		y,x = self.moves[-1]
