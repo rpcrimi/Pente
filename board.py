@@ -1,3 +1,6 @@
+import random
+random.seed(5)
+
 class Board(object):
 	def __init__(self, boardSize):
 		self.boardSize = boardSize
@@ -21,6 +24,14 @@ class Board(object):
 		except ValueError:
 			return 0
 
+	def makeRandomMove(self, player):
+		while True:
+			y, x = random.randint(0, self.boardSize - 1), random.randint(0, self.boardSize - 1)
+			if self.board[y][x] == 0:
+				self.board[y][x] = player.playerNum
+				self.moves.append([y,x])
+				return y, x
+
 	def makeMove(self, player):
 		# Read in move
 		move = raw_input("%s, enter your next move (row,col): " % player.name).split(",")
@@ -31,7 +42,7 @@ class Board(object):
 		y, x = int(move[0]), int(move[1])
 		self.board[y][x] = player.playerNum
 		self.moves.append([y,x])
-		return y,x
+		return y, x
 
 	def checkFor5(self):
 		return
