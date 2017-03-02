@@ -33,6 +33,9 @@ class Board(object):
 		self.moves.append([y,x])
 		return y,x
 
+	def checkFor5(self):
+		return
+
 	def checkForCapture(self, player, waitingPlayer):
 		y,x = self.moves[-1]
 		pNum = player.playerNum

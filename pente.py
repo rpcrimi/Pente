@@ -19,7 +19,7 @@ class Pente(object):
 			return player1
 		elif self.player2.captures == 5:
 			return player2
-		# Check for 5 in a row
+
 
 	def playGame(self):
 		self.board.printBoard()
@@ -28,6 +28,7 @@ class Pente(object):
 			numCaptures = self.board.checkForCapture(self.currentPlayer, self.waitingPlayer)
 			if numCaptures:
 				self.currentPlayer.captures += numCaptures
+			self.board.checkFor5()
 			self.checkForWinner()
 			self.switchCurrentPlayer()
 			self.board.printBoard()
