@@ -5,6 +5,7 @@ class Pente(object):
 		self.player2 = player2
 		self.currentPlayer = player1
 		self.waitingPlayer = player2
+		self.fiveInARow = False
 
 	def switchCurrentPlayer(self):
 		if self.currentPlayer == self.player1:
@@ -19,16 +20,18 @@ class Pente(object):
 			return player1
 		elif self.player2.captures == 5:
 			return player2
+		elif self.fiveInARow:
+			return self.currentPlayer
+		else:
+			return None
 
 
 	def playGame(self):
 		self.board.printBoard()
 		while True:
 			self.board.makeMove(self.currentPlayer)
-			numCaptures = self.board.checkForCapture(self.currentPlayer, self.waitingPlayer)
-			if numCaptures:
-				self.currentPlayer.captures += numCaptures
-			self.board.checkFor5()
+			self.numCaptures += self.board.checkForCapture(self.currentPlayer, self.waitingPlayer)
+			self.fiveInARow = self.board.checkFor5()
 			self.checkForWinner()
 			self.switchCurrentPlayer()
 			self.board.printBoard()
