@@ -32,7 +32,7 @@ class Pente(object):
 		while True:
 			self.moves.append(self.board.makeMove(self.currentPlayer))
 			self.currentPlayer.captures += self.board.checkForCapture(self.currentPlayer, self.waitingPlayer)
-			self.fiveInARow = self.board.checkFor5()
+			self.fiveInARow = self.board.checkFor5Recursive()
 			self.checkForWinner()
 			self.switchCurrentPlayer()
 			self.board.printBoard()
@@ -42,7 +42,7 @@ class Pente(object):
 		for i in range(maxIter):
 			self.moves.append(self.board.makeRandomMove(self.currentPlayer))
 			self.currentPlayer.captures += self.board.checkForCapture(self.currentPlayer, self.waitingPlayer)
-			self.fiveInARow = self.board.checkFor5()
+			self.fiveInARow = self.board.checkFor5Recursive()
 			winner = self.checkForWinner()
 			if winner:
 				print "WINNER: Player %d" % winner.playerNum 
